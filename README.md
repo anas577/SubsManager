@@ -1,2 +1,2 @@
 # SubsManager
-A webapp to manage subsriptions in one place
+The backend for a webapp to manage subsriptions in one place
