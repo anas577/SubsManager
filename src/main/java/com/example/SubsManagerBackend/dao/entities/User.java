@@ -1,13 +1,12 @@
 package com.example.SubsManagerBackend.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -17,10 +16,13 @@ import lombok.Setter;
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    private Integer id;
+    private String username;
+    private String emailAdress;
+    @OneToMany(mappedBy = "user")
+    private List<Suggestion> suggestions;
 
-private Integer id;
-private String username;
-private String emailAdress;
-private String pamentMethod;
+    @OneToMany(mappedBy = "user")
+    private List<Subscription> subscriptions;
 
 }

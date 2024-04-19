@@ -1,13 +1,12 @@
 package com.example.SubsManagerBackend.dao.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -19,8 +18,8 @@ public class Suggestion {
     private Integer id;
     private String type;
     private String message;
-    private double price;
-    private int  rating;
-    private  String discounts;
-
+    @ManyToOne
+    private User user;
+    @ManyToMany(mappedBy = "suggestions")
+    private List<Service> services;
 }
