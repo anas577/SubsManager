@@ -27,7 +27,7 @@ public class Subscription {
     private User user;
 
     @ManyToOne
-    private Service service;
+    private Provider provider;
 
     @OneToMany(mappedBy = "subscription")
     private List<Payment> payments;

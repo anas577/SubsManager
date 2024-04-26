@@ -21,5 +21,5 @@ public class Suggestion {
     @ManyToOne
     private User user;
     @ManyToMany(mappedBy = "suggestions")
-    private List<Service> services;
+    private List<Provider> providers;
 }
