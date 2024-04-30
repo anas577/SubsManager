@@ -1,5 +1,6 @@
 package com.example.SubsManagerBackend.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,17 +14,19 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class Provider {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String imageURL;
     @ManyToMany
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Suggestion> suggestions;
 
     @ManyToOne
     private Category category;
 
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "provider")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Subscription> subscriptions;
 }

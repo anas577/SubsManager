@@ -25,12 +25,9 @@ public class CategoryService implements CategoryManager{
 
     @Override
     public Category updateCategory(Category category) {
-        try{
-            return categoryRepository.save(category);
-        }catch(Exception exception){
-            System.out.println(exception);
-            return null;
-        }
+
+        return categoryRepository.save(category);
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.SubsManagerBackend.dao.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +20,8 @@ public class Subscription {
     private Integer id;
     private String plan ;
     private SubscriptionStatus status;
-    private int coupon;
-    private int renewalFrequency;
-    private Date paymentDate;
+    private RenewalFrequency renewalFrequency;
+    private Date StartDate;
     private double paymentCost;
     @ManyToOne
     private User user;
@@ -30,9 +30,13 @@ public class Subscription {
     private Provider provider;
 
     @OneToMany(mappedBy = "subscription")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Payment> payments;
 
     @OneToMany(mappedBy = "subscription")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Notification> notifications;
 
+    @OneToOne(mappedBy = "subscription")
+    public Suggestion suggestion;
 }
