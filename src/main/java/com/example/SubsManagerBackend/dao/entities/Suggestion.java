@@ -16,10 +16,9 @@ import java.util.List;
 public class Suggestion {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String type;
-    private String message;
-    @ManyToOne
-    private User user;
     @ManyToMany(mappedBy = "suggestions")
     private List<Provider> providers;
+
+    @OneToOne
+    private Subscription subscription;
 }
