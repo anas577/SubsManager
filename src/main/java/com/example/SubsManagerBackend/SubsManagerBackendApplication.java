@@ -58,12 +58,10 @@ public class SubsManagerBackendApplication {
 			providerManager.addProvider(provider4);
 
 			User user = new User(null, "TestUSer","test.email@gmail.com",null);
-			userManager.addUser(user);*/
+			userManager.addUser(user);
 
-			Subscription subscription = new Subscription(null,"Standard", SubscriptionStatus.ACTIVE,RenewalFrequency.MONTHLY,new Date(),12,null,null,null,null,null);
-			subscriptionManager.addSubscription(subscription);
-
-
+			Subscription subscription = new Subscription(null,"Standard", SubscriptionStatus.ACTIVE,RenewalFrequency.MONTHLY,new Date(),12,userManager.getUserById(1),providerManager.getProviderById(9),null,null,null);
+			subscriptionManager.addSubscription(subscription);*/
 		};
 	}
 
