@@ -6,6 +6,8 @@ import com.example.SubsManagerBackend.service.PaymentManager;
 import com.example.SubsManagerBackend.service.SubscriptionManager;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,6 +35,8 @@ public class PaymentController {
     public Payment createPayment(@RequestBody Payment payment){
         Subscription subscription = subscriptionManager.getSubscriptionById(payment.getSubscription().getId());
         payment.setSubscription(subscription);
+        payment.setAmount(subscription.getPaymentCost());
+        payment.setDate(new Date());
         return paymentManager.addPayment(payment);
 
     }
