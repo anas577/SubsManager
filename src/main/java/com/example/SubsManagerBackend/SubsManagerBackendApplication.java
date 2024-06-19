@@ -10,10 +10,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @SpringBootApplication
+@EnableScheduling
 public class SubsManagerBackendApplication {
 	@Autowired
 	CategoryManager categoryManager;
@@ -33,8 +37,10 @@ public class SubsManagerBackendApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(){
 		return args -> {
-			/*Category cat = categoryManager.getCategoryById(5);
-			Category cat2 = categoryManager.getCategoryById(6);
+            categoryManager.addCategory(new Category(null,"Streaming","ddd",null));
+            categoryManager.addCategory(new Category(null,"Fitness","ddd",null));
+			Category cat = categoryManager.getCategoryById(1);
+			Category cat2 = categoryManager.getCategoryById(2);
 
 
 			Provider provider = new Provider();
@@ -60,8 +66,12 @@ public class SubsManagerBackendApplication {
 			User user = new User(null, "TestUSer","test.email@gmail.com",null);
 			userManager.addUser(user);
 
-			Subscription subscription = new Subscription(null,"Standard", SubscriptionStatus.ACTIVE,RenewalFrequency.MONTHLY,new Date(),12,userManager.getUserById(1),providerManager.getProviderById(9),null,null,null);
-			subscriptionManager.addSubscription(subscription);*/
+
+            LocalDate localDate = LocalDate.of(2024, 5, 19); // Year 2024, Month May, Day 19
+            Date startDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+			Subscription subscription = new Subscription(null,"Standard", SubscriptionStatus.ACTIVE,RenewalFrequency.MONTHLY,startDate,12,userManager.getUserById(1),providerManager.getProviderById(1),null,null,null);
+			subscriptionManager.addSubscription(subscription);
 		};
 	}
 

@@ -15,5 +15,5 @@ public interface PaymentManager {
     public boolean deletePaymentById(Integer id);
     public Collection<Payment> getAllPayments();
     public Payment getPaymentById(Integer id);
-
+    public void processActiveSubscriptions();
 }
