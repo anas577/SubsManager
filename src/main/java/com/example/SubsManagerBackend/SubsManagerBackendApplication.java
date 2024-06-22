@@ -5,74 +5,61 @@ import com.example.SubsManagerBackend.service.CategoryManager;
 import com.example.SubsManagerBackend.service.ProviderManager;
 import com.example.SubsManagerBackend.service.SubscriptionManager;
 import com.example.SubsManagerBackend.service.UserManager;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 @EnableScheduling
 public class SubsManagerBackendApplication {
 	@Autowired
-	CategoryManager categoryManager;
-
-	@Autowired
-	ProviderManager providerManager;
-
-	@Autowired
-	UserManager userManager;
-
-	@Autowired
-	SubscriptionManager subscriptionManager;
+	private UserManager userManager;
 	public static void main(String[] args) {
 		SpringApplication.run(SubsManagerBackendApplication.class, args);
 	}
-
 	@Bean
-	public CommandLineRunner commandLineRunner(){
-		return args -> {
-            categoryManager.addCategory(new Category(null,"Streaming","ddd",null));
-            categoryManager.addCategory(new Category(null,"Fitness","ddd",null));
-			Category cat = categoryManager.getCategoryById(1);
-			Category cat2 = categoryManager.getCategoryById(2);
-
-
-			Provider provider = new Provider();
-			provider.setName("Netflix");
-			provider.setCategory(cat);
-			providerManager.addProvider(provider);
-
-			Provider provider2 = new Provider();
-			provider2.setName("Hulu");
-			provider2.setCategory(cat);
-			providerManager.addProvider(provider2);
-
-			Provider provider3 = new Provider();
-			provider3.setName("Amazon Prime");
-			provider3.setCategory(cat);
-			providerManager.addProvider(provider3);
-
-			Provider provider4 = new Provider();
-			provider4.setName("My Fitness Pal");
-			provider4.setCategory(cat2);
-			providerManager.addProvider(provider4);
-
-			User user = new User(null, "TestUSer","test.email@gmail.com",null);
-			userManager.addUser(user);
-
-
-            LocalDate localDate = LocalDate.of(2024, 5, 19); // Year 2024, Month May, Day 19
-            Date startDate = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-			Subscription subscription = new Subscription(null,"Standard", SubscriptionStatus.ACTIVE,RenewalFrequency.MONTHLY,startDate,12,userManager.getUserById(1),providerManager.getProviderById(1),null,null,null);
-			subscriptionManager.addSubscription(subscription);
-		};
+	BCryptPasswordEncoder bCryptPasswordEncoder(){
+		return new BCryptPasswordEncoder();
 	}
+
+	//@PostConstruct
+	public void initUsers() {
+
+		userManager.addUser( new User(null,"user3", "123","user2@mail.com", Role.USER,null));
+		userManager.addUser(new User(null,"admin3", "123","admin2@mail.com", Role.ADMIN,null));
+
+
+
+	}
+
+	/*
+	@Bean
+	public WebMvcConfigurer corsConfigurer()
+	{
+		String[] allowDomains = new String[2];
+		allowDomains[0] = "http://localhost:4200";
+		allowDomains[1] = "http://localhost:8085";
+
+		System.out.println("CORS configuration....");
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins(allowDomains);
+			}
+		};
+	}*/
 
 }

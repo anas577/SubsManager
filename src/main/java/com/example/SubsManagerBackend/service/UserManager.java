@@ -12,4 +12,5 @@ public interface UserManager {
     public boolean deleteUserById(Integer id);
     public Collection<User> getAllUsers();
     public User getUserById(Integer id);
+    public User getUserByUsername(String username);
 }
