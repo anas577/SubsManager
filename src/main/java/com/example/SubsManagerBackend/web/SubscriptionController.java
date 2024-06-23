@@ -2,6 +2,7 @@ package com.example.SubsManagerBackend.web;
 
 import com.example.SubsManagerBackend.dao.entities.Provider;
 import com.example.SubsManagerBackend.dao.entities.Subscription;
+import com.example.SubsManagerBackend.dao.entities.SubscriptionStatus;
 import com.example.SubsManagerBackend.dao.entities.User;
 import com.example.SubsManagerBackend.service.ProviderManager;
 import com.example.SubsManagerBackend.service.SubscriptionManager;
@@ -26,7 +27,7 @@ public class SubscriptionController {
 
     @GetMapping
     public List<Subscription> subscriptionList(){
-        return subscriptionManager.getAllSubscriptions();
+        return subscriptionManager.getSubscriptionsForCurrentUser();
     }
 
     @GetMapping("/{id}")
@@ -59,5 +60,15 @@ public class SubscriptionController {
         subscriptionManager.removeSubscriptionById(id);
     }
 
+    @PutMapping("/changeStatus/{id}")
+    public Subscription changeSubscriptionStatus(@PathVariable Integer id){
+        Subscription subscription = subscriptionManager.getSubscriptionById(id);
+        if(subscription.getStatus().equals(SubscriptionStatus.ACTIVE)){
+            subscription.setStatus(SubscriptionStatus.INACTIVE);
+        }else{
+            subscription.setStatus(SubscriptionStatus.ACTIVE);
+        }
+        return subscriptionManager.editSubscription(subscription);
+    }
 
 }

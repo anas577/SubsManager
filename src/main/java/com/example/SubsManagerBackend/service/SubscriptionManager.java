@@ -1,9 +1,6 @@
 package com.example.SubsManagerBackend.service;
 
-import com.example.SubsManagerBackend.dao.entities.Category;
-import com.example.SubsManagerBackend.dao.entities.Provider;
-import com.example.SubsManagerBackend.dao.entities.Subscription;
-import com.example.SubsManagerBackend.dao.entities.SubscriptionStatus;
+import com.example.SubsManagerBackend.dao.entities.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -16,5 +13,6 @@ public interface SubscriptionManager {
     public boolean removeSubscriptionById(Integer id);
     public List<Subscription> getAllSubscriptions();
     public Subscription getSubscriptionById(Integer id);
+    public List<Subscription> getSubscriptionsForCurrentUser();
 
 }

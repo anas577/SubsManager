@@ -1,8 +1,12 @@
 package com.example.SubsManagerBackend.service;
 
 import com.example.SubsManagerBackend.dao.Repositories.SubscriptionRepository;
+import com.example.SubsManagerBackend.dao.Repositories.UserRepository;
 import com.example.SubsManagerBackend.dao.entities.Subscription;
+import com.example.SubsManagerBackend.dao.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +15,8 @@ import java.util.List;
 public class SubscriptionService implements SubscriptionManager{
     @Autowired
     public SubscriptionRepository subscriptionRepository;
+    @Autowired
+    public UserRepository userRepository;
     @Override
     public Subscription addSubscription(Subscription subscription) {
         return subscriptionRepository.save(subscription);
@@ -49,5 +55,14 @@ public class SubscriptionService implements SubscriptionManager{
     @Override
     public Subscription getSubscriptionById(Integer id) {
         return subscriptionRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Subscription> getSubscriptionsForCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        User user = userRepository.findUserByUsername(currentUserName);
+        return subscriptionRepository.findByUser(user);
+
     }
 }
