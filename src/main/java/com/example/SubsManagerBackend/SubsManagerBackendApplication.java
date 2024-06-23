@@ -27,6 +27,10 @@ import java.util.List;
 public class SubsManagerBackendApplication {
 	@Autowired
 	private UserManager userManager;
+	@Autowired
+	private CategoryManager categoryManager;
+	@Autowired
+	private ProviderManager providerManager;
 	public static void main(String[] args) {
 		SpringApplication.run(SubsManagerBackendApplication.class, args);
 	}
@@ -35,11 +39,28 @@ public class SubsManagerBackendApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	//@PostConstruct
-	public void initUsers() {
+	@PostConstruct
+	public void init() {
 
-		userManager.addUser( new User(null,"user3", "123","user2@mail.com", Role.USER,null));
-		userManager.addUser(new User(null,"admin3", "123","admin2@mail.com", Role.ADMIN,null));
+		//userManager.addUser( new User(null,"user3", "123","user2@mail.com", Role.USER,null));
+		//userManager.addUser(new User(null,"admin3", "123","admin2@mail.com", Role.ADMIN,null));
+		Category streamingCategory = new Category(null,"Streaming","Streaming services such as movies and TV shows.",null);
+		Category fitnessCategory = new Category(null,"Fitness","Fitness and health services",null);
+		Category productivityCategory = new Category(null,"Productivity","Productivity and work-related services.",null);
+		categoryManager.addCategory(streamingCategory);
+		categoryManager.addCategory(fitnessCategory);
+		categoryManager.addCategory(productivityCategory);
+
+		providerManager.addProvider(new Provider(null,"Netflix","https://1000logos.net/wp-content/uploads/2017/05/Netflix-Logo-2006.png",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Hulu","https://1000logos.net/wp-content/uploads/2020/12/Hulu-Logo.jpg",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Amazon Prime Video","https://1000logos.net/wp-content/uploads/2022/10/Amazon-Prime-Video-Icon.png",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Disney+","https://1000logos.net/wp-content/uploads/2021/01/Disney-Plus-Logo-768x432.jpg",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Apple TV+","https://1000logos.net/wp-content/uploads/2022/02/Apple-TV-macOS-logo-768x432.png",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"MyfitnessPal","https://www.pngwing.com/en/free-png-yhbfa",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Fitbit","https://1000logos.net/wp-content/uploads/2017/09/Fitbit-logo-768x384.jpg",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"ChatGPT","https://1000logos.net/wp-content/uploads/2023/02/ChatGPT-Logo-768x432.jpg",null,streamingCategory,null));
+		providerManager.addProvider(new Provider(null,"Trello","https://1000logos.net/wp-content/uploads/2021/05/Trello-logo-768x432.jpg",null,streamingCategory,null));
+
 
 
 
